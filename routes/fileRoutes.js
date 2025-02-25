@@ -13,6 +13,10 @@ const getFilePath = (fileName) => {
     return path.join(__dirname, '..', 'storage', path.basename(fileName));
 };
 
+const getDirectoryPath = (dirName) => {
+    return path.join(__dirname, '..', 'storage', path.basename(dirName));
+};
+
 // Read file
 router.get('/read', async (req, res) => {
     try {
@@ -106,7 +110,7 @@ router.post('/create-dir', async (req, res) => {
     return res.status(400).json({ error: 'Directory name is required' });
   }
 
-  const dirPath = getFilePath(dirName);
+  const dirPath = getDirectoryPath(dirName);
 
   try {
     await fs.mkdir(dirPath, { recursive: true }); // Creates nested directories if needed
@@ -124,7 +128,7 @@ router.delete('/delete-dir', async (req, res) => {
     return res.status(400).json({ error: 'Directory name is required' });
   }
 
-  const dirPath = getFilePath(dirName);
+  const dirPath = getDirectoryPath(dirName);
 
   try {
     await fs.rm(dirPath, { recursive: true, force: true }); // Deletes even if it's not empty
